@@ -6,6 +6,10 @@ MyServer::MyServer(QObject *parent)
 
 }
 
+void MyServer::updateconn(){
+
+}
+
 bool ipValidator(QString ip)
 {
     static QRegularExpression ipPattern("^((25[0-5]|2[0-4][0-9]|[01]?[0-9]{1,2})\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]{1,2})$");

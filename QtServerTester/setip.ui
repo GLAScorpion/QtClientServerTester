@@ -39,9 +39,9 @@ color: white;</string>
   <widget class="QPlainTextEdit" name="IpSetter">
    <property name="geometry">
     <rect>
-     <x>70</x>
+     <x>10</x>
      <y>80</y>
-     <width>181</width>
+     <width>171</width>
      <height>61</height>
     </rect>
    </property>
@@ -59,8 +59,11 @@ text-align: center;
    <property name="horizontalScrollBarPolicy">
     <enum>Qt::ScrollBarAlwaysOff</enum>
    </property>
-   <property name="placeholderText">
+   <property name="plainText">
     <string>127.0.0.1</string>
+   </property>
+   <property name="placeholderText">
+    <string/>
    </property>
   </widget>
   <widget class="QLabel" name="ErrorLabel">
@@ -116,6 +119,9 @@ font-size: 18px;</string>
      <height>29</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">font: bold;</string>
+   </property>
    <property name="text">
     <string>Confirm</string>
    </property>
@@ -129,8 +135,67 @@ font-size: 18px;</string>
      <height>29</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">font: bold;</string>
+   </property>
    <property name="text">
     <string>Cancel</string>
+   </property>
+  </widget>
+  <widget class="QPlainTextEdit" name="PortSetter">
+   <property name="geometry">
+    <rect>
+     <x>193</x>
+     <y>80</y>
+     <width>111</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font-size: 30px;
+text-align: center;
+</string>
+   </property>
+   <property name="plainText">
+    <string>2222</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>50</y>
+     <width>101</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: bold;</string>
+   </property>
+   <property name="text">
+    <string>Ip Address</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>50</y>
+     <width>71</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: bold;</string>
+   </property>
+   <property name="text">
+    <string>Port</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
    </property>
   </widget>
  </widget>

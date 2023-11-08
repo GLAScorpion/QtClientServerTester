@@ -10,6 +10,7 @@ public:
 private:
     std::vector<std::unique_ptr<QTcpSocket*>> clients;
 public slots:
+    void updateconn(QHostAddress address, qint16 port);
 };
 
 #endif // NETHANDLER_H

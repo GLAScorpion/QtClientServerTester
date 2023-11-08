@@ -7,8 +7,12 @@ SetIp::SetIp(QWidget *parent) :
 {
     ui->setupUi(this);
     ErrorLabel = findChild<QLabel*>("ErrorLabel");
+    ConfirmButton = findChild<QPushButton*>("ConfirmButton");
     //ErrorLabel->setStyleSheet("color:black;border:0px;");
+
 }
+
+
 
 SetIp::~SetIp()
 {
