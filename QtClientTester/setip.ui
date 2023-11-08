@@ -36,6 +36,22 @@
 border:5px solid rgb(0, 85, 0);
 color: white;</string>
   </property>
+  <widget class="QDialogButtonBox" name="buttonBox">
+   <property name="geometry">
+    <rect>
+     <x>110</x>
+     <y>200</y>
+     <width>101</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+   <property name="standardButtons">
+    <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+   </property>
+  </widget>
   <widget class="QPlainTextEdit" name="IpSetter">
    <property name="geometry">
     <rect>
@@ -107,48 +123,38 @@ font-size: 18px;</string>
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QPushButton" name="ConfirmButton">
-   <property name="geometry">
-    <rect>
-     <x>50</x>
-     <y>200</y>
-     <width>83</width>
-     <height>29</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Confirm</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="CancelButton">
-   <property name="geometry">
-    <rect>
-     <x>190</x>
-     <y>200</y>
-     <width>83</width>
-     <height>29</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Cancel</string>
-   </property>
-  </widget>
  </widget>
  <resources/>
  <connections>
   <connection>
-   <sender>CancelButton</sender>
-   <signal>pressed()</signal>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>SetIp</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>248</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
    <receiver>SetIp</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>231</x>
-     <y>214</y>
+     <x>316</x>
+     <y>260</y>
     </hint>
     <hint type="destinationlabel">
-     <x>159</x>
-     <y>119</y>
+     <x>286</x>
+     <y>274</y>
     </hint>
    </hints>
   </connection>
