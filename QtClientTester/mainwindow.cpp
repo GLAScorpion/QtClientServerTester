@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "setip.h"
+
 #include <QPushButton>
 #include <iostream>
 MainWindow::MainWindow(QWidget *parent)
@@ -9,12 +10,19 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     SendMex = findChild<QPushButton*>("SendMex");
+    Connect = findChild<QPushButton*>("Connect");
     Console = findChild<QPlainTextEdit*>("Console");
     InsMex = findChild<QPlainTextEdit*>("InsMex");
     IpSetter = findChild<QAction*>("actionSet_Ip");
-    connect(SendMex,&QPushButton::pressed,this,&MainWindow::broadcast);
-    connect(IpSetter,&QAction::triggered,this,&MainWindow::setip);
 
+    connect(IpSetter,&QAction::triggered,this,&MainWindow::setip);
+    connect(Connect,&QPushButton::pressed,this,&MainWindow::start_conn);
+
+}
+
+void MainWindow::start_conn(){
+    connect(SendMex,&QPushButton::pressed,this,&MainWindow::broadcast);
+    client = new MyClient;
 }
 
 void MainWindow::broadcast(){
@@ -42,8 +50,3 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::ServerBind(MyServer* server){
-    this->server = server;
-    connect(this,&MainWindow::send_message,server,&MyServer::broadcast);
-    connect(server,&MyServer::ready_message,this,&MainWindow::write_console);
-}

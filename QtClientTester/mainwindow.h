@@ -5,7 +5,8 @@
 #include <QPushButton>
 #include <QPlainTextEdit>
 #include <QAction>
-#include "myserver.h"
+#include <QTcpSocket>
+#include "myclient.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -18,16 +19,18 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    void ServerBind(MyServer* server);
+
 
 private:
-    MyServer* server = nullptr;
+    MyClient* client = nullptr;
     QAction* IpSetter = nullptr;
     QPlainTextEdit* Console = nullptr;
     QPlainTextEdit* InsMex = nullptr;
     QPushButton* SendMex = nullptr;
+    QPushButton* Connect = nullptr;
     Ui::MainWindow *ui = nullptr;
 public slots:
+    void start_conn();
     void write_console(std::string message);
     void broadcast();
     void setip();

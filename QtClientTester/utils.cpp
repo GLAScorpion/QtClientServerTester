@@ -1,16 +1,7 @@
-#include "nethandler.h"
+#include "utils.h"
 #include <QRegularExpression>
-MyServer::MyServer(QObject *parent)
-:QTcpServer(parent)
-{
 
-}
-
-void MyServer::updateconn(){
-
-}
-
-bool ipValidator(QString ip)
+bool Utils::IpValidator(QString ip)
 {
     static QRegularExpression ipPattern("^((25[0-5]|2[0-4][0-9]|[01]?[0-9]{1,2})\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]{1,2})$");
     QRegularExpressionMatch match = ipPattern.match(ip);
