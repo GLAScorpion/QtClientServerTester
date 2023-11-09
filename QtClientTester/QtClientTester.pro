@@ -12,18 +12,15 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     myclient.cpp \
-    setip.cpp \
     utils.cpp
 
 HEADERS += \
     mainwindow.h \
     myclient.h \
-    setip.h \
     utils.h
 
 FORMS += \
-    mainwindow.ui \
-    setip.ui
+    mainwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

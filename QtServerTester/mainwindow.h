@@ -29,7 +29,8 @@ private:
     Ui::MainWindow *ui = nullptr;
 public slots:
     void write_console(std::string message);
-    void broadcast();
+    void broadcast(std::string message);
+    void broadcast_server();
     void setip();
 public: Q_SIGNALS:
     void send_message(std::string data);

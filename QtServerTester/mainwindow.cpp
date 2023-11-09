@@ -12,18 +12,21 @@ MainWindow::MainWindow(QWidget *parent)
     Console = findChild<QPlainTextEdit*>("Console");
     InsMex = findChild<QPlainTextEdit*>("InsMex");
     IpSetter = findChild<QAction*>("actionSet_Ip");
-    connect(SendMex,&QPushButton::pressed,this,&MainWindow::broadcast);
+    connect(SendMex,&QPushButton::pressed,this,&MainWindow::broadcast_server);
     connect(IpSetter,&QAction::triggered,this,&MainWindow::setip);
 
 }
 
-void MainWindow::broadcast(){
+void MainWindow::broadcast_server(){
     QString mex ="[Server]: " + InsMex->toPlainText();
     InsMex->setPlainText("");
-    emit send_message(mex.toStdString());
-    write_console(mex.toStdString());
+    broadcast(mex.toStdString());
 }
 
+void MainWindow::broadcast(std::string message){
+    emit send_message(message);
+    write_console(message);
+}
 void MainWindow::write_console(std::string message)
 {
     Console->appendPlainText(QString::fromStdString(message));
@@ -45,5 +48,5 @@ MainWindow::~MainWindow()
 void MainWindow::ServerBind(MyServer* server){
     this->server = server;
     connect(this,&MainWindow::send_message,server,&MyServer::broadcast);
-    connect(server,&MyServer::ready_message,this,&MainWindow::write_console);
+    connect(server,&MyServer::ready_message,this,&MainWindow::broadcast);
 }

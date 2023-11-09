@@ -4,9 +4,9 @@
 #include <QMainWindow>
 #include <QPushButton>
 #include <QPlainTextEdit>
-#include <QAction>
 #include <QTcpSocket>
 #include "myclient.h"
+#include <QLineEdit>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -22,8 +22,10 @@ public:
 
 
 private:
+    QLineEdit* Nickname = nullptr;
     MyClient* client = nullptr;
-    QAction* IpSetter = nullptr;
+    QLineEdit* IpSetter = nullptr;
+    QLineEdit* PortSetter = nullptr;
     QPlainTextEdit* Console = nullptr;
     QPlainTextEdit* InsMex = nullptr;
     QPushButton* SendMex = nullptr;
@@ -32,10 +34,9 @@ private:
 public slots:
     void start_conn();
     void write_console(std::string message);
-    void broadcast();
-    void setip();
+    void send_message();
 public: Q_SIGNALS:
-    void send_message(std::string data);
+    void message_ready(std::string data);
     //void send_pressed();
 };
 #endif // MAINWINDOW_H

@@ -40,6 +40,6 @@ void MyServer::process_data(){
 
 MyServer::~MyServer(){
     for(unsigned long long i=0; i < clients.size();i++ ){
-        clients[i]->disconnectFromHost();
+        clients[i]->abort();
     }
 }

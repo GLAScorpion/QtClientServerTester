@@ -54,3 +54,5 @@ compile_commands.json
 *_qmlcache.qrc
 QtServerTester/.qmake.stash
 QtServerTester/.qtc_clangd/*
+QtClientTester/.qmake.stash
+QtClientTester/.qtc_clangd/*
