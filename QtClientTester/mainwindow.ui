@@ -307,7 +307,7 @@ color: white;</string>
      <string>127.0.0.1</string>
     </property>
     <property name="maxLength">
-     <number>16</number>
+     <number>32767</number>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>

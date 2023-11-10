@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "utils.h"
+#include <QHostInfo>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -20,32 +21,43 @@ MainWindow::MainWindow(QWidget *parent)
 void MainWindow::start_conn(){
     QString address = IpSetter->text();
     QString port = PortSetter->text();
+    QString nick = Nickname->text();
     int pos = 0;
-    if(!Utils::IpValidator(address)||Utils::kValidPort.validate(port,pos)!=QIntValidator::Acceptable){
+    if(nick.isEmpty()){
+        write_console("Insert a nickname");
+        return;
+    }
+    QHostInfo info = QHostInfo::fromName(address);
+    if((info.error()!=QHostInfo::NoError&&!Utils::IpValidator(address))||Utils::kValidPort.validate(port,pos)!=QIntValidator::Acceptable){
         write_console("Invalid IP/Port");
         return;
+    }
+    if(info.error()==QHostInfo::NoError){
+        address = info.addresses()[0].toString();
     }
     if(client&&client->state()==QTcpSocket::ConnectedState) {
         client->abort();
         client->deleteLater();
     }
     client = new MyClient(this);
+    client->SetNickname(nick.toStdString());
     client->connectToHost(QHostAddress(address),port.toInt());
+    client->waitForConnected(3000);
+    if(client->state()!=QTcpSocket::ConnectedState){
+        write_console("An error occurred in the connection");
+        return;
+    }
+    client->write(nick.toStdString().data());
     connect(this,&MainWindow::message_ready,client,&MyClient::send_message);
     connect(client,&MyClient::ready_message,this,&MainWindow::write_console);
 }
 
 void MainWindow::send_message(){
-    QString nick = Nickname->text();
-    if(nick.isEmpty()){
-        write_console("Insert a nickname");
-        return;
-    }
     if(!client||client->state()!=QTcpSocket::ConnectedState){
         write_console("Socket isn't connected");
         return;
     }
-    QString mex ="[" + nick + "]: " + InsMex->toPlainText();
+    QString mex = InsMex->toPlainText();
     InsMex->setPlainText("");
     emit message_ready(mex.toStdString());
     //write_console(mex.toStdString());

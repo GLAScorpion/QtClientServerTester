@@ -8,7 +8,7 @@ MyServer::MyServer(QObject *parent)
     server = new QTcpServer(this);
     updateconn(QHostAddress::LocalHost, Utils::kPort);
     connect(server,&QTcpServer::pendingConnectionAvailable,this,&MyServer::add_socket);
-
+    connect(this,&MyServer::ready_message,this,&MyServer::broadcast);
 }
 
 void MyServer::updateconn(QHostAddress address, qint16 port){
@@ -19,27 +19,46 @@ void MyServer::updateconn(QHostAddress address, qint16 port){
 
 void MyServer::broadcast(std::string message){
     char* data = message.data();
-    for (unsigned long long i=0;i<clients.size();i++) {
-        clients[i]->write(data);
+    for (auto i = clients.cbegin();i!=clients.cend();i++) {
+        i->first->write(data);
     }
 }
 
 void MyServer::add_socket(){
     if(server->hasPendingConnections()){
         QTcpSocket* socket = server->nextPendingConnection();
-        clients.push_back(socket);
+        socket->waitForReadyRead();
+        std::string nick = socket->readLine().toStdString();
+        for(auto i = clients.cbegin();i!=clients.cend();i++){
+            if(i->second == nick){
+                socket->write("Username already in use, connection refused");
+                socket->abort();
+                return;
+            }
+        }
+        clients[socket] = nick;
         connect(socket,&QTcpSocket::readyRead,this,&MyServer::process_data);
+        emit ready_message("[" + nick + "] joined the lobby");
+        connect(socket,&QTcpSocket::disconnected,this,&MyServer::disconnection_cleanup);
     }
 }
 
+void MyServer::disconnection_cleanup(){
+    auto node = clients.extract(dynamic_cast<QTcpSocket*>(sender()));
+    disconnect(node.key(),&QTcpSocket::readyRead,this,&MyServer::process_data);
+    disconnect(node.key(),&QTcpSocket::disconnected,this,&MyServer::disconnection_cleanup);
+    node.key()->deleteLater();
+    emit ready_message("[" + node.mapped() + "] left the lobby");
+}
 void MyServer::process_data(){
     QTcpSocket* socket = dynamic_cast<QTcpSocket*>(sender());
-    std::string message = QString(socket->readAll()).toStdString();
+    std::string message = "[" + clients[socket] + "]: " + QString(socket->readAll()).toStdString();
     emit ready_message(message);
 }
 
 MyServer::~MyServer(){
-    for(unsigned long long i=0; i < clients.size();i++ ){
-        clients[i]->abort();
+    broadcast("!!Server is shutting down!!");
+    for(auto i = clients.cbegin();i!=clients.cend();i++){
+        i->first->abort();
     }
 }

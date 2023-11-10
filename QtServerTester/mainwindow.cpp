@@ -48,5 +48,5 @@ MainWindow::~MainWindow()
 void MainWindow::ServerBind(MyServer* server){
     this->server = server;
     connect(this,&MainWindow::send_message,server,&MyServer::broadcast);
-    connect(server,&MyServer::ready_message,this,&MainWindow::broadcast);
+    connect(server,&MyServer::ready_message,this,&MainWindow::write_console);
 }

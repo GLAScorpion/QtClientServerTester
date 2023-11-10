@@ -6,6 +6,10 @@ class MyClient : public QTcpSocket{
     Q_OBJECT
 public:
     MyClient(QObject* parent = nullptr);
+    void SetNickname(std::string Nickname){nickname = Nickname;}
+    std::string GetNickname(){return nickname;}
+private:
+    std::string nickname;
 public slots:
     void process_message();
     void send_message(std::string message);
