@@ -4,19 +4,14 @@
 #include <QThread>
 #include <QTextStream>
 #include <iostream>
-QCoreApplication* createApplication(int &argc, char *argv[])
-{
-    for (int i = 1; i < argc; ++i) {
-        if (std::string(argv[i]) == "-nogui")
-            return new QCoreApplication(argc, argv);
-    }
-    return new QApplication(argc, argv);
-}
+#include "argparser.h"
 
 int main(int argc, char* argv[])
 {
-    QScopedPointer<QCoreApplication> app(createApplication(argc, argv));
+    ArgParser parser(argc,argv);
+    QScopedPointer<QCoreApplication> app(parser.GUIArg());
     MyServer server;
+    server.updateconn(parser.AddressArg(),parser.PortArg());
     if (qobject_cast<QApplication *>(app.data())) {
         // start GUI version...
         MainWindow w;

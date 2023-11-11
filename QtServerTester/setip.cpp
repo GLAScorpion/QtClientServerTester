@@ -19,7 +19,7 @@ void SetIp::confirm(){
     QString address = IpAddress->text();
     QString port = Port->text();
     int pos = 0;
-    if(Utils::IpValidator(address)&&Utils::kValidPort.validate(port,pos)==QIntValidator::Acceptable){
+    if(Utils::IpValidator(address)&&Utils::PortValidator.validate(port,pos)==QIntValidator::Acceptable){
         emit newconn(QHostAddress(address),port.toInt());
         accept();
     }else{

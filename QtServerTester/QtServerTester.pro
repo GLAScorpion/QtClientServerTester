@@ -8,12 +8,14 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 CONFIG += c++17 console
 
 HEADERS += \
+   argparser.h \
    mainwindow.h \
    myserver.h \
    setip.h \
    utils.h
 
 SOURCES += \
+   argparser.cpp \
    main.cpp \
    mainwindow.cpp \
    myserver.cpp \

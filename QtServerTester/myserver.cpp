@@ -13,7 +13,16 @@ MyServer::MyServer(QObject *parent)
 
 void MyServer::updateconn(QHostAddress address, qint16 port){
     if(server->serverAddress()==address && server->serverPort()==port) return;
-    if(server->isListening()) server->close();
+    if(server->isListening()){
+        broadcast("Server is disconnecting");
+        server->close();
+        for(auto i = clients.cbegin();i!=clients.cend();i++){
+            auto node = clients.extract(i->first);
+            disconnect(node.key(),&QTcpSocket::readyRead,this,&MyServer::process_data);
+            disconnect(node.key(),&QTcpSocket::disconnected,this,&MyServer::disconnection_cleanup);
+            node.key()->deleteLater();
+        }
+    }
     server->listen(address,port);
 }
 
