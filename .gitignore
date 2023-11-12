@@ -1,4 +1,5 @@
 # C++ objects and libs
+*.stash
 *.slo
 *.lo
 *.o
@@ -56,3 +57,9 @@ QtServerTester/.qmake.stash
 QtServerTester/.qtc_clangd/*
 QtClientTester/.qmake.stash
 QtClientTester/.qtc_clangd/*
+QtClientAndroidTester/.qtc_clangd/*
+QtClientAndroidTester/android-build/*
+QtClientAndroidTester/android-QtClientAndroidTester-deployment-settings.json
+QtClientAndroidTester/qmake_resources.qrc
+QtClientAndroidTester/qrc_qmake_resources.obj
+QtClientAndroidTester/main.obj

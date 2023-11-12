@@ -27,7 +27,7 @@ private:
     QLineEdit* IpSetter = nullptr;
     QLineEdit* PortSetter = nullptr;
     QPlainTextEdit* Console = nullptr;
-    QPlainTextEdit* InsMex = nullptr;
+    QLineEdit* InsMex = nullptr;
     QPushButton* SendMex = nullptr;
     QPushButton* Connect = nullptr;
     Ui::MainWindow *ui = nullptr;
