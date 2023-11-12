@@ -2,16 +2,7 @@ name: Client Windows Release
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - 'master'
-      - 'continuous-integration'
-    tags:
-      - 'v*'
-  pull_request:
-    branches:
-    - 'master'
-    - 'continuous-integration'
+  
 
 defaults:
   run:
@@ -69,10 +60,10 @@ jobs:
       - name: (8) Build
         working-directory: ${{ runner.temp }}\build
         run:  |
-              qmake -r ${{ env.SOURCE_DIR }}\planets-qml.pro
+              qmake -r ${{ env.SOURCE_DIR }}\QtClientTester.pro
               ${{ runner.temp }}\jom\jom -j2
               cd release
-              windeployqt --qmldir ${{ env.SOURCE_DIR }} planets-qml.exe --pdb --release --compiler-runtime
+              windeployqt --qmldir ${{ env.SOURCE_DIR }} QtClientTester.exe --pdb --release --compiler-runtime
               copy C:\Windows\System32\concrt140.dll . 
               copy C:\Windows\System32\vccorlib140.dll .
               copy C:\Windows\System32\msvcp140.dll .
@@ -81,7 +72,7 @@ jobs:
       - name: (9) Zip build
         working-directory: ${{ runner.temp }}
         run:  |
-              7z a qt-planets-build.zip ${{ runner.temp }}\build\* -r
+              7z a QtClientTester-build.zip ${{ runner.temp }}\build\* -r
               
       - name: (10) Save build artifact
         uses: actions/upload-artifact@master
