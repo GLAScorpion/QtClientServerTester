@@ -41,21 +41,25 @@ ApplicationWindow {
                 id:colpopip
                 spacing: 10
                 PaddedRectangle{
+
                     id: iprect
-                    height: 20
+                    height: 40
                     padding: 10
                     RowLayout{
                         TextField{
                             placeholderText: qsTr("Ip address")
                             width: 145
+                            height: 30
                             id: ipfield
                         }
                         Text{
+                            height: 30
                             id: iplabel
                             text: qsTr(":")
                         }
                         TextField{
                             placeholderText: qsTr("Port")
+                            height: 30
                             width: 45
                             id: portfield
                             maximumLength: 5
@@ -63,10 +67,11 @@ ApplicationWindow {
                     }
                 }
                 PaddedRectangle{
+
                     id: iprectbutton
                     padding: 10
                     RowLayout{
-
+                        Layout.alignment: Qt.AlignJustify
                         Button{
                             id: confirmip
                             text: qsTr("Confirm")
